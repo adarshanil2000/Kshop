@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+
+       {{ Product.dec|truncatewords:155 }}
+
+
+
+{% endblock %}
+{% block title %}
+     {% if category %}
+           {{Product.name}}-Yak store
+
+     {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="row my_prod_row_class">
+    <div class="mx_auto">
+        <p> <a href="{% url 'Ecapp:allprodcat' %}">home</a>| <a href="{{Product.category.get_url}}">{{Product.category}}</a>{{Product.name}}</p>
+    </div>
+</div>
+<div class="container">
+<br>
+<div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+        <div class="min-width:18rem">
+            <img class="my_image_padding" src="{{product.img.url}}" alt="{{Product.name">
+        </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+        <div>
+        <h1 class="my_prod_title"> {{product.name}}</h1>
+        <p class="my_price">${{product.price}}</p>
+        <p class="my_titles"> {{product.dec}}</p>
+        <p class="text-justify my_prod_text">${{product.dec}}</p>
+        {% if product.stock <= 0 %}
+        <p><b>OUT of STOCK</b></p>
+        {% else %}
+          <a class="btn btn-secondary" href="{% url 'cart:add_cart' product.id %}">add to cart</a>
+
+        {% endif %}
+
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+   {% if category %}
+       {{ category.dec|truncatewords:155 }}
+    {% else %}
+        Welcome to YAK Mart
+     {% endif %}
+{% endblock %}
+{% block title %}
+     {% if category %}
+           {{category.name}}-Yak store
+     {% else %}
+            see our new collections
+     {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% if category %}
+<div>
+    <div class="row my_row_class">
+        <div class="mx_auto">
+        <p><a href="{% url 'Ecapp:allprodcat' %}">our product collections</a></p>
+
+        </div>
+        </div>
+    </div>
+   {% endif %}
+  <div class="mx-auto">
+            {% if category %}
+
+        </div>
+
+        <br>
+        <div>
+            <h1 class="text-center my_title">{{category.name}}</h1>
+            <p>{{category.dec}}</p>
+        </div>
+             {% else %}
+
+<div>
+
+
+</div>
+
+<div>
+    <img class="my_image " src="{% static 'images/kshopbanner.jpg' %}" alt="our products">
+    </div>
+
+<br>
+
+
+<br>
+
+               {% endif %}
+<div class="container">
+    <div class="row mx_auto">
+        {% for product in products.object_list %}
+        <div class="my_bottom_margin col-9 col-sm-12 col-md-4  xol-lg-4">
+        <div class="card text-center" style="min-width:18rem;">
+            <div>
+                <a href="{{product.get_url}}" ><img class="card-img" src="{{product.img.url}}" alt="{{product.name}}"></a>
+                <div class="card-body">
+                    <h4><b>{{product.name}}</b></h4>
+                    <p>{{product.price}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+                 {% endfor %}
+            </div>
+    <div class="mx_auto">
+    {% if products.paginator.num_pages > 1 %}
+
+
+        <div class="text-center">
+            {% for pg in products.paginator.page_range %}
+            <a href="?page={{pg}}" class="btn btn-light btn-sm {% if products.number == pg %} active {% endif %}">{{pg}}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <br>
+    </div>
+
+
+
+          {% endblock %}
+

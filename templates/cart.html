@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+
+   This is the cart page.proceed
+{% endblock %}
+{% block title %}
+    cart-YAK PVT LTD
+{% endblock %}
+{% block content %}
+{% if not cart_items %}
+<div>
+<div class="text-center">
+    <br>
+    <h1 class="text-center my_title">
+        your shopping cart is empty
+    </h1>
+  <br>
+    <p class="text-center">
+        Please click <a href="{% url 'Ecapp:allprodcat' %}">HERE</a>to continue your shopping
+    </p>
+
+
+
+</div>
+    </div>
+{% else %}
+<div>
+    <div class="text-center">
+        <br>
+       <h1 class="text-center my-title">your shopping cart</h1>
+        <br>
+        </div>
+        </div>
+    <div class="row mx_auto">
+         <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+
+            <table class="table my_custom_table">
+                <thead class="my_custom_thead">
+
+            <tr>
+                <th colspan="5">
+                   Your items
+                </th>
+          </tr>
+            </thead>
+            <tbody>
+            {% for cart_item in cart_items %}
+
+            <tr>
+                <td>
+                    <a href="{% url 'Ecapp:allprodcat' %}"><img src="{{cart_item.Product.img.url}}" alt="" style="width:100px; height:100px;" class="float-left my_imag_padding"> </a>
+                </td>
+                <td class="text-left">
+                    {{cart_item.Product.name}}
+                    <br>
+                    SKU: {{cart_item_Product.id}}
+                    <br>
+                    price: $ {{cart_item.Product.Price}}
+                    <br>
+                    Qty : {{cart_item.quantity}} x $ {{cart_item}}
+                </td>
+                <td>
+                    $ {{cart_item.sub_total}}
+                </td>
+                {% if cart_item.quantity < cart_item.Product.stock %}
+                <td>
+
+                    <a href="{% url 'cart:add_cart' cart_item.Product.id %}" class="custom_a"><i class="fa fa-plus"></i></a>&nbsp;
+                    <a href="{% url 'cart:cart_remove' cart_item.Product.id %}" class="custom_a"><i class="fa fa-minus"></i></a>
+                    <a href="{% url 'cart:full_remove' cart_item.Product.id %}" class="custom_icon"><i class="fa fa-trash custom_icon"></i></a>
+
+                </td>
+                {% else %}
+                <td>
+                   &nbsp;<a href="{% url 'cart:cart_remove' cart_item.Product.id %}" class="custom_a"><i class="fa-solid fa-minus custom_icon"></i></a>
+                    &nbsp;<a href="(% url 'cart:full_remove' cart_item.Product.id %}" class="custom_icon"><i class="fa-solid fa-trash custom_icon"></i></a>
+
+
+                </td>
+            {% endif %}
+                </tr>
+
+             {% endfor %}
+            </tbody>
+
+        </table>
+        </div>
+<br>
+
+       <div  class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+        <table class="table my_custom_table">
+            <thead class="my_custom_thead">
+            <tr>
+                <th>
+                    check out
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    please review your cart items before proceding oder payments
+                </td>
+            </tr>
+            <tr>
+              <td class="text-left">
+               your total is <strong>{{total}}</strong>
+              </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+           <div class="mx_auto">
+            <a href="{% url 'Ecapp:allprodcat' %}" class="btn btn-secondary btn-block my_custom_button">continue shopping</a>
+            <a href="https://pythonanywhere.com/Ecapp" class="btn btn-primary">buy now</a>
+           </div>
+    {% endif %}
+</div>
+
+</div>
+
+
+
+
+        {% endblock %}
